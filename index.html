@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优化后的H5页面</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,61 +12,62 @@
         }
         iframe, img {
             width: 100%;
-            max-width: 100%;
             border-radius: 10px;
-            height: auto;
+            overflow: hidden;
+            max-width: 100%;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
-        ul li {
+        li {
             margin: 10px 0;
         }
         h2 {
-            margin: 20px 0;
+            margin-top: 20px;
+            font-size: 1.2em;
         }
-        @media (min-width: 768px) {
-            iframe {
-                height: 540px;
+        a {
+            text-decoration: none;
+            color: blue;
+        }
+        @media (max-width: 768px) {
+            iframe, img {
+                border-radius: 5px;
             }
-        }
-        @media (max-width: 767px) {
-            iframe {
-                height: auto;
+            h2 {
+                font-size: 1em;
+            }
+            li {
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
-
-<iframe
-    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-    frameborder="0"
-    height="175"
-    style="width: 100%; max-width: 100%; overflow: hidden; border-radius: 10px;"
-    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-    src="https://embed.music.apple.com/cn/album/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB/1679278166?i=1679278167">
-</iframe>
-
-<ul>
-    <li><a href="https://zh.moegirl.org.cn/%E3%80%90%E6%88%91%E6%8E%A8%E7%9A%84%E5%AD%A9%E5%AD%90%E3%80%91">click me</a></li>
-    <li>会赢的！帽子！</li>
-    <li><a href="/blog">blog(Unrelated)</a></li>
-</ul>
-
-<h2>▼TVアニメ『【推しの子】』第2期番宣CM▼</h2>
-<iframe
-    src="https://www.youtube.com/embed/ROhHx0D-ch8"
-    title="推しの子"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-</iframe>
-
-<img
-    src="https://pbs.twimg.com/media/FztrpHvWYAAwPt6?format=jpg&name=4096x4096"
-    alt="Image"
->
+    <iframe
+        allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+        frameborder="0"
+        height="175"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+        src="https://embed.music.apple.com/cn/album/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB/1679278166?i=1679278167">
+    </iframe>
+    <ul>
+        <li><a href="https://zh.moegirl.org.cn/%E3%80%90%E6%88%91%E6%8E%A8%E7%9A%84%E5%AD%A9%E5%AD%90%E3%80%91">click me</a></li>
+        <li>会赢的！帽子！</li>
+        <li><a href="/blog">blog(Unrelated)</a></li>
+    </ul>
+    <h2>▼TVアニメ『【推しの子】』第2期番宣CM▼</h2>
+    <iframe
+        height="540"
+        src="https://www.youtube.com/embed/ROhHx0D-ch8"
+        title="推しの子"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+    <img
+        src="https://pbs.twimg.com/media/FztrpHvWYAAwPt6?format=jpg&name=4096x4096"
+        alt="推しの子 图片">
 </body>
 </html>
