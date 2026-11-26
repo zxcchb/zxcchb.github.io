@@ -1,72 +1,241 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        iframe, img {
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            max-width: 100%;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        h2 {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-        a {
-            text-decoration: none;
-            color: blue;
-        }
-        @media (max-width: 768px) {
-            iframe, img {
-                border-radius: 5px;
-            }
-            h2 {
-                font-size: 1em;
-            }
-            li {
-                font-size: 0.9em;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zxcchb · keqing.work</title>
+<meta name="description" content="zxcchb 的个人主页 — Blog 与 VER 的入口">
+<meta name="author" content="zxcchb">
+<meta name="theme-color" content="#0b0d10">
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-soft: #10131a;
+    --card: #141821;
+    --card-hover: #171c27;
+    --border: rgba(255,255,255,.08);
+    --border-strong: rgba(255,255,255,.14);
+    --text: #e8eaed;
+    --muted: #9aa0a8;
+    --faint: #5d636d;
+    --accent: #7c8cff;
+    --accent-2: #4dd6c1;
+    --radius: 20px;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Noto Sans Mono CJK SC", monospace;
+  }
+  html[data-theme="light"] {
+    --bg: #f6f7f9;
+    --bg-soft: #eef0f4;
+    --card: #ffffff;
+    --card-hover: #ffffff;
+    --border: rgba(10,14,20,.08);
+    --border-strong: rgba(10,14,20,.14);
+    --text: #16181d;
+    --muted: #5b6470;
+    --faint: #8b93a0;
+    --accent: #5468e8;
+    --accent-2: #0f9d8a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    transition: background .35s ease, color .35s ease;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+    z-index: 0;
+  }
+  main { position: relative; z-index: 1; width: min(920px, calc(100% - 40px)); margin: 0 auto; flex: 1; padding: 64px 0 48px; }
+
+  /* top bar */
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 12px; color: var(--faint);
+    letter-spacing: .04em;
+    animation: rise .7s .05s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .topbar .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); margin-right: 8px; vertical-align: 1px; }
+  #themeToggle {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    border-radius: 99px; padding: 5px 12px; cursor: pointer;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+    transition: border-color .2s, color .2s;
+  }
+  #themeToggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+  /* hero */
+  .hero { margin: 96px 0 56px; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    letter-spacing: .08em;
+    animation: rise .7s .12s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .kicker b { color: var(--accent); font-weight: 600; }
+  h1 {
+    font-size: clamp(40px, 7.5vw, 76px);
+    font-weight: 700; letter-spacing: -.03em; line-height: 1.08;
+    margin: 20px 0 22px;
+    animation: rise .7s .2s cubic-bezier(.2,.7,.2,1) both;
+  }
+  h1 .grad {
+    background: linear-gradient(120deg, var(--accent) 10%, var(--accent-2) 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lede {
+    color: var(--muted); font-size: 17px; line-height: 1.75; max-width: 560px;
+    animation: rise .7s .28s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .lede code {
+    font-family: var(--mono); font-size: .88em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    padding: 2px 7px; border-radius: 6px; color: var(--text);
+  }
+
+  /* bento grid */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 28px 26px;
+    display: flex; flex-direction: column; gap: 14px;
+    text-decoration: none; color: var(--text);
+    overflow: hidden;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s, background .35s, box-shadow .35s;
+    animation: rise .8s .38s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .card:nth-child(2) { animation-delay: .46s; }
+  .card::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(420px 200px at 70% -20%, rgba(124,140,255,.13), transparent 70%);
+    opacity: 0; transition: opacity .4s;
+  }
+  html[data-theme="light"] .card::after {
+    background: radial-gradient(420px 200px at 70% -20%, rgba(84,104,232,.09), transparent 70%);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: 0 18px 40px -18px rgba(0,0,0,.5);
+  }
+  html[data-theme="light"] .card:hover { box-shadow: 0 18px 40px -20px rgba(22,24,29,.18); }
+  .card:hover::after { opacity: 1; }
+  .card .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card .tag .live { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 0 3px rgba(77,214,193,.15); }
+  .card h2 { font-size: 26px; letter-spacing: -.02em; display: flex; align-items: baseline; gap: 10px; }
+  .card h2 .en { color: var(--faint); font-size: 14px; font-family: var(--mono); font-weight: 400; }
+  .card p { color: var(--muted); font-size: 14.5px; line-height: 1.75; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+  .chip {
+    font-size: 12.5px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 99px;
+    padding: 4px 12px;
+  }
+  .card .go {
+    margin-top: 10px; display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--text);
+    font-weight: 500;
+  }
+  .card .go .arrow { transition: transform .3s cubic-bezier(.2,.7,.2,1); display: inline-block; }
+  .card:hover .go .arrow { transform: translateX(6px); color: var(--accent); }
+  .card .domain { color: var(--faint); font-family: var(--mono); font-size: 12px; }
+
+  /* footer */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 26px 0 34px;
+    width: min(920px, calc(100% - 40px)); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    font-family: var(--mono); font-size: 12px; color: var(--faint);
+    animation: rise .8s .55s cubic-bezier(.2,.7,.2,1) both;
+  }
+  footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+  footer a:hover { color: var(--text); border-color: var(--border-strong); }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
 </head>
 <body>
-    <iframe
-        allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-        frameborder="0"
-        height="175"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-        src="https://embed.music.apple.com/cn/album/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB/1679278166?i=1679278167">
-    </iframe>
-    <ul>
-        <li><a href="https://zh.moegirl.org.cn/%E3%80%90%E6%88%91%E6%8E%A8%E7%9A%84%E5%AD%A9%E5%AD%90%E3%80%91">click me</a></li>
-        <li>会赢的！帽子！</li>
-        <li><a href="/blog">blog(Unrelated)</a></li>
-    </ul>
-    <h2>▼TVアニメ『【推しの子】』第2期番宣CM▼</h2>
-    <iframe
-        height="540"
-        src="https://www.youtube.com/embed/ROhHx0D-ch8"
-        title=""
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-    </iframe>
-    <img
-        src="https://pbs.twimg.com/media/FztrpHvWYAAwPt6?format=jpg&name=4096x4096"
-        alt="推しの子 图片">
+<main>
+  <div class="topbar">
+    <span><span class="dot"></span>zxcchb — online</span>
+    <button id="themeToggle" type="button" aria-label="切换主题">◐ theme</button>
+  </div>
+
+  <section class="hero">
+    <div class="kicker">~/<b>keqing.work</b> · index</div>
+    <h1>欢迎，远道而来的<br><span class="grad">舰长 / 旅长 / 道长</span></h1>
+    <p class="lede">
+      这里是我的个人主页 —— 一个安静的入口。<br>
+      下面是我维护的两个站点：<code>Blog</code> 与 <code>VER</code>，随时欢迎过去坐坐。
+    </p>
+  </section>
+
+  <section class="grid">
+    <a class="card" href="https://blog.keqing.work/" target="_blank" rel="noopener">
+      <div class="tag"><span class="live"></span>BLOG</div>
+      <h2>博客 <span class="en">/ blog.keqing.work</span></h2>
+      <p>技术与日常的记录本：从 T-SQL 格式化插件踩坑，到 GitHub Pages + Hexo 的折腾笔记 —— 写给未来的自己。</p>
+      <div class="chips"><span class="chip">Hexo</span><span class="chip">随笔</span><span class="chip">踩坑记录</span></div>
+      <div class="go"><span class="domain">blog.keqing.work</span><span class="arrow">→</span></div>
+    </a>
+
+    <a class="card" href="https://ver.keqing.work/" target="_blank" rel="noopener">
+      <div class="tag"><span class="live"></span>VER</div>
+      <h2>米哈游资讯 <span class="en">/ ver.keqing.work</span></h2>
+      <p>崩坏3 · 原神 · 星穹铁道 · 绝区零的版本日历与更新倒计时，前瞻直播节点一站可查。</p>
+      <div class="chips"><span class="chip">崩坏3</span><span class="chip">原神</span><span class="chip">星穹铁道</span><span class="chip">绝区零</span></div>
+      <div class="go"><span class="domain">ver.keqing.work</span><span class="arrow">→</span></div>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 zxcchb</span>
+  <span>
+    <a href="https://github.com/zxcchb" target="_blank" rel="noopener">github.com/zxcchb</a>
+    <span style="margin:0 10px">·</span>
+    <a href="mailto:k915187267@gmail.com">k915187267@gmail.com</a>
+  </span>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    root.setAttribute("data-theme", theme);
+    document.getElementById("themeToggle").addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
 </body>
 </html>
